@@ -46,7 +46,7 @@
 
 ## What is this?
 
-Scratch Creator is an AI Agent Skill that enables Claude, Codex, OpenCode, and other AI coding assistants to programmatically create, modify, and package Scratch 3.0 projects. Instead of manually dragging blocks in the Scratch editor, you can describe what you want in natural language and let the Agent generate the project file for you.
+Scratch Creator is an AI Agent Skill that enables Claude Code, Cursor, Copilot, Gemini, Codex, Windsurf, Augment, Continue, OpenCode, Amazon Q, and other AI coding assistants to programmatically create, modify, and package Scratch 3.0 projects. Instead of manually dragging blocks in the Scratch editor, you can describe what you want in natural language and let the Agent generate the project file for you.
 
 Scratch 3.0 is developed by MIT and used by millions of children and educators worldwide. Its .sb3 file format is an open standard — a ZIP archive containing a `project.json` and media assets. This Skill provides everything an AI Agent needs to work with that format.
 
@@ -65,19 +65,22 @@ Scratch 3.0 is developed by MIT and used by millions of children and educators w
 
 ## Compatible Agents
 
-This Skill is provided as Markdown documents + Python scripts. Theoretically, **any AI Agent that supports file reading and code execution** can use it:
+This Skill is provided as Markdown documents + Python scripts. Theoretically, **any AI Agent that supports file reading and code execution** can use it. Each platform has a dedicated configuration file in the project root:
 
-| Agent | Compatibility | Notes |
-|-------|--------------|-------|
-| **Claude (Cowork)** | Perfect | Native SKILL.md support, can read `references/` directly |
-| **Claude Code** | Perfect | SKILL.md is Claude Code's native skill format |
-| **OpenAI Codex** | Usable | Read SKILL.md + `references/` as context, execute Python scripts |
-| **OpenCode** | Usable | Same — supports Markdown context and script execution |
-| **Cursor** | Usable | Add SKILL.md and `references/` to project context |
-| **GitHub Copilot** | Partial | Can use SKILL.md as context reference, but cannot execute scripts directly |
-| **Gemini CLI** | Usable | Any agent that supports reading files and executing commands |
+| # | Agent | Compatibility | Config File | Notes |
+|---|-------|--------------|-------------|-------|
+| 1 | **Claude Code** | Perfect | `CLAUDE.md` + `SKILL.md` | Native SKILL.md format; CLAUDE.md for project-level instructions |
+| 2 | **Cursor** | Usable | `.cursor/rules/scratch-creator.mdc` | Auto-applied rule; reads context and can execute scripts in terminal |
+| 3 | **GitHub Copilot** | Usable | `.github/copilot-instructions.md` | Provides block reference, workflow, and code generation guidance |
+| 4 | **Gemini CLI** | Usable | `.gemini/GEMINI.md` | Full workflow with Python API and block reference index |
+| 5 | **OpenAI Codex** | Usable | `.codex/CODEX.md` | Complete workflow, Python API, block JSON format reference |
+| 6 | **Windsurf** | Usable | `.windsurfrules` | Project rules for Scratch block generation and script execution |
+| 7 | **Augment** | Usable | `.augment/rules/scratch-creator.md` | Context-aware rules with block reference index |
+| 8 | **Continue** | Usable | `.continuerules` | Extension config with quick-start patterns and reference tables |
+| 9 | **OpenCode** | Usable | `.opencode/AGENTS.md` | Full project documentation following OpenCode conventions |
+| 10 | **Amazon Q** | Usable | `.amazonq/rules/scratch-creator.md` | Development rules with block format and workflow guidance |
 
-**Core principle:** The `SKILL.md` and `references/` directory provide complete Scratch 3.0 block reference documentation. After reading them, the Agent gains all opcode knowledge needed to generate correct project JSON. The `scripts/` directory provides Python utility functions that the Agent can call directly or translate into other languages.
+**Core principle:** The `SKILL.md` and `references/` directory provide complete Scratch 3.0 block reference documentation. After reading them, the Agent gains all opcode knowledge needed to generate correct project JSON. The `scripts/` directory provides Python utility functions that the Agent can call directly or translate into other languages. Each platform's config file teaches the agent how to use these resources effectively.
 
 ---
 
@@ -133,8 +136,18 @@ python -c "from scripts.scratch_utils import create_demo_project, validate_proje
 ```
 scratch-creator/
 ├── SKILL.md                        # Agent skill definition (workflow & usage)
+├── CLAUDE.md                       # Claude Code project documentation
 ├── README.md                       # This file (English documentation)
 ├── README_cn.md                    # Chinese documentation
+├── .codex/CODEX.md                 # OpenAI Codex CLI instructions
+├── .cursor/rules/                  # Cursor rule files
+├── .gemini/GEMINI.md               # Gemini CLI project instructions
+├── .github/copilot-instructions.md # GitHub Copilot instructions
+├── .opencode/AGENTS.md             # OpenCode project instructions
+├── .windsurfrules                  # Windsurf project rules
+├── .continuerules                  # Continue extension rules
+├── .augment/rules/                 # Augment rule files
+├── .amazonq/rules/                 # Amazon Q rule files
 ├── references/                     # Complete block reference docs (194+ opcodes)
 │   ├── blocks-events.md            # Event blocks (10)
 │   ├── blocks-motion.md            # Motion blocks (18)

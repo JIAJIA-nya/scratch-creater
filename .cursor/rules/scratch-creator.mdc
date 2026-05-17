@@ -1,0 +1,81 @@
+---
+alwaysApply: true
+description: "Scratch 3.0 project creation skill — generate .sb3 files with Python scripts and block references"
+---
+
+# Scratch Creator — Cursor Rules
+
+This project is an AI Agent Skill for creating and modifying MIT Scratch 3.0 projects (`.sb3` files). `.sb3` files are ZIP archives containing a `project.json` and media assets (SVG/PNG, WAV/MP3).
+
+## How to Generate Scratch Projects
+
+### Resources
+- **`SKILL.md`** — Primary skill entry point with full workflow
+- **`references/`** — 17 files documenting all 194+ Scratch block opcodes with JSON examples
+- **`scripts/`** — Python modules (zero external deps, Python 3.7+ stdlib only)
+- **`templates/`** — 10 project templates (animation, games, interactive stories)
+
+### Core Workflow
+1. Read `references/project-json-schema.md` for the project.json structure
+2. Read relevant `references/blocks-*.md` files for needed block opcodes
+3. Use `scripts/project_builder.py` (`ScratchProject` class) to create project structure
+4. Use `scripts/block_builder.py` (60+ `make_*()` functions) to create blocks
+5. Use `scripts/scratch_utils.py` to pack into `.sb3`
+
+### Quick Example
+```python
+import sys; sys.path.insert(0, 'scripts')
+from project_builder import ScratchProject
+from block_builder import num, string
+
+proj = ScratchProject()
+proj.create_stage()
+sprite = proj.create_sprite("Cat", x=0, y=0)
+proj.add_blocks_from_chain(sprite, [
+    ("event_whenflagclicked", {}, {}),
+    ("motion_movesteps", {"STEPS": num(10)}, {}),
+    ("looks_say", {"MESSAGE": string("Hello!")}, {}),
+])
+proj.save_json("output/project.json")
+```
+
+### Block JSON Format
+```json
+{
+  "opcode": "motion_movesteps",
+  "next": null, "parent": null,
+  "inputs": { "STEPS": [1, [4, "10"]] },
+  "fields": {},
+  "shadow": false, "topLevel": true
+}
+```
+
+Input types: `[1, [4, "10"]]` = number, `[1, [10, "text"]]` = string, `[1, [12, "varId", "name"]]` = variable, `[2, "blockId"]` = nested reporter.
+
+### Block Reference Index
+| Category | File |
+|----------|------|
+| Events (10) | `references/blocks-events.md` |
+| Motion (18) | `references/blocks-motion.md` |
+| Looks (24) | `references/blocks-looks.md` |
+| Sound (12) | `references/blocks-sound.md` |
+| Control (17) | `references/blocks-control.md` |
+| Sensing (20) | `references/blocks-sensing.md` |
+| Operators (18) | `references/blocks-operators.md` |
+| Variables (17) | `references/blocks-variables.md` |
+| Extensions (music/pen/video/translate/tts/microbit/lego) | `references/blocks-*.md` |
+| Project schema | `references/project-json-schema.md` |
+
+### Coordinate System
+Stage: 480×360. x: [-240, 240], y: [-180, 180]. Direction: 0°=up, 90°=right.
+
+### Key Python API
+- **scratch_utils.py**: `unpack_sb3()`, `pack_sb3()`, `create_empty_project()`, `add_sprite()`, `create_block()`, `validate_project()`, `create_project_directory()`
+- **block_builder.py**: `make_event_whenflagclicked()`, `make_movesteps(n)`, `make_say(msg)`, `make_forever()`, `make_if()`, `make_wait(s)`, `make_broadcast(name)`, `ScriptBuilder`, `num()`, `string()`
+- **project_builder.py**: `ScratchProject` — `create_sprite()`, `add_variable()`, `add_blocks_from_chain()`, `add_extension()`, `save_json()`, `validate()`
+
+### Best Practices
+1. Always read the relevant block reference file before writing block JSON
+2. Validate frequently with `validate_project()`
+3. Use descriptive variable names (`score`, `lives` not `var1`)
+4. Test generated .sb3 in the Scratch editor

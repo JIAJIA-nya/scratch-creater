@@ -46,7 +46,7 @@
 
 ## 这是什么？
 
-Scratch Creator 是一个 AI Agent Skill，让 Claude、Codex、OpenCode 等 AI 编程助手能够以编程方式创建、修改和打包 Scratch 3.0 项目。你只需用自然语言描述你想要什么，Agent 就能自动生成项目文件，无需在 Scratch 编辑器中手动拖拽积木块。
+Scratch Creator 是一个 AI Agent Skill，让 Claude Code、Cursor、Copilot、Gemini、Codex、Windsurf、Augment、Continue、OpenCode、Amazon Q 等 AI 编程助手能够以编程方式创建、修改和打包 Scratch 3.0 项目。你只需用自然语言描述你想要什么，Agent 就能自动生成项目文件，无需在 Scratch 编辑器中手动拖拽积木块。
 
 Scratch 3.0 由 MIT 开发，全球数百万儿童和教育工作者在使用。其 .sb3 文件格式是开放标准——一个包含 `project.json` 和媒体资源的 ZIP 压缩包。本 Skill 提供了 AI Agent 处理该格式所需的一切。
 
@@ -65,19 +65,22 @@ Scratch 3.0 由 MIT 开发，全球数百万儿童和教育工作者在使用。
 
 ## 适用 Agent
 
-本 Skill 以 Markdown 文档 + Python 脚本的形式提供。理论上，**任何支持文件读取和代码执行的 AI Agent 都可以使用**：
+本 Skill 以 Markdown 文档 + Python 脚本的形式提供。理论上，**任何支持文件读取和代码执行的 AI Agent 都可以使用**。项目根目录下为每个平台提供了专属配置文件：
 
-| Agent | 兼容性 | 说明 |
-|-------|--------|------|
-| **Claude (Cowork)** | 完美 | 原生支持 SKILL.md 格式，可直接读取 references/ 目录 |
-| **Claude Code** | 完美 | 同上，SKILL.md 是 Claude Code 原生 skill 格式 |
-| **OpenAI Codex** | 可用 | 读取 SKILL.md + references/ 作为上下文，执行 Python 脚本 |
-| **OpenCode** | 可用 | 同上，支持 Markdown 上下文和脚本执行 |
-| **Cursor** | 可用 | 将 SKILL.md 和 references/ 加入项目上下文 |
-| **GitHub Copilot** | 部分 | 可将 SKILL.md 作为上下文参考，但无法直接执行脚本 |
-| **Gemini CLI** | 可用 | 支持读取文件和执行命令的 Agent 均可使用 |
+| # | Agent | 兼容性 | 配置文件 | 说明 |
+|---|-------|--------|---------|------|
+| 1 | **Claude Code** | 完美 | `CLAUDE.md` + `SKILL.md` | 原生支持 SKILL.md 格式；CLAUDE.md 提供项目级指令 |
+| 2 | **Cursor** | 可用 | `.cursor/rules/scratch-creator.mdc` | 自动应用的规则文件；可读取上下文并在终端执行脚本 |
+| 3 | **GitHub Copilot** | 可用 | `.github/copilot-instructions.md` | 提供积木块参考、工作流和代码生成指导 |
+| 4 | **Gemini CLI** | 可用 | `.gemini/GEMINI.md` | 完整工作流，含 Python API 和积木块索引 |
+| 5 | **OpenAI Codex** | 可用 | `.codex/CODEX.md` | 完整工作流，含 Python API 和积木块 JSON 格式参考 |
+| 6 | **Windsurf** | 可用 | `.windsurfrules` | Scratch 积木块生成和脚本执行的项目规则 |
+| 7 | **Augment** | 可用 | `.augment/rules/scratch-creator.md` | 含积木块索引的上下文感知规则 |
+| 8 | **Continue** | 可用 | `.continuerules` | 扩展配置，含快速启动模式和参考表 |
+| 9 | **OpenCode** | 可用 | `.opencode/AGENTS.md` | 遵循 OpenCode 规范的完整项目文档 |
+| 10 | **Amazon Q** | 可用 | `.amazonq/rules/scratch-creator.md` | 开发规则，含积木块格式和工作流指导 |
 
-**核心原理：** `SKILL.md` 和 `references/` 目录提供了完整的 Scratch 3.0 积木块参考文档，Agent 读取后即可获得所有 opcode 知识。`scripts/` 目录提供了 Python 工具函数，Agent 可以直接调用或翻译为其他语言执行。
+**核心原理：** `SKILL.md` 和 `references/` 目录提供了完整的 Scratch 3.0 积木块参考文档，Agent 读取后即可获得所有 opcode 知识。`scripts/` 目录提供了 Python 工具函数，Agent 可以直接调用或翻译为其他语言执行。每个平台的配置文件教 Agent 如何有效使用这些资源。
 
 ---
 
@@ -133,8 +136,21 @@ python -c "from scripts.scratch_utils import create_demo_project, validate_proje
 ```
 scratch-creator/
 ├── SKILL.md                        # Agent skill 定义（工作流和使用方法）
+├── CLAUDE.md                       # Claude Code 项目文档
+├── AGENTS.md                       # OpenCode 项目指令
+├── CODEX.md                        # OpenAI Codex CLI 指令
+├── GEMINI.md                       # Gemini CLI 项目指令
 ├── README.md                       # 英文文档
 ├── README_cn.md                    # 中文文档（本文件）
+├── .codex/CODEX.md                 # OpenAI Codex CLI 指令
+├── .cursor/rules/                  # Cursor 规则文件
+├── .gemini/GEMINI.md               # Gemini CLI 项目指令
+├── .github/copilot-instructions.md # GitHub Copilot 指令
+├── .opencode/AGENTS.md             # OpenCode 项目指令
+├── .windsurfrules                  # Windsurf 项目规则
+├── .continuerules                  # Continue 扩展规则
+├── .augment/rules/                 # Augment 规则文件
+├── .amazonq/rules/                 # Amazon Q 规则文件
 ├── references/                     # 积木块完整参考文档（194+ 个操作码）
 │   ├── blocks-events.md            # 事件类积木块（10 个）
 │   ├── blocks-motion.md            # 运动类积木块（18 个）

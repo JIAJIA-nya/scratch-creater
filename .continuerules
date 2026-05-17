@@ -1,0 +1,74 @@
+# Continue Rules — Scratch Creator
+
+Scratch Creator is an AI Agent Skill that generates MIT Scratch 3.0 projects (`.sb3` files). `.sb3` = ZIP containing `project.json` + media assets.
+
+This project provides everything needed to programmatically create Scratch projects: block reference documentation, Python build scripts, and project templates.
+
+## When the User Asks About Scratch
+
+When a user wants to create a Scratch project (animation, game, interactive story), use this skill:
+
+1. **Read `SKILL.md`** for the full workflow
+2. **Read the relevant `references/blocks-*.md`** for needed block opcodes
+3. **Use `scripts/project_builder.py`** to build the project
+4. **Use `scripts/block_builder.py`** for individual blocks
+5. **Use `scripts/scratch_utils.py`** to pack/validate
+
+## Quick Start Code
+
+```python
+import sys; sys.path.insert(0, 'scripts')
+from project_builder import ScratchProject
+from block_builder import num, string
+
+proj = ScratchProject()
+proj.create_stage()
+sprite = proj.create_sprite("Sprite1")
+proj.add_blocks_from_chain(sprite, [
+    ("event_whenflagclicked", {}, {}),
+    ("control_forever", {"SUBSTACK": [2, "NEXT"]}, {}),
+    ("motion_movesteps", {"STEPS": num(10)}, {}),
+    ("motion_ifonedgebounce", {}, {}),
+])
+proj.save_json("project_output/project.json")
+```
+
+Then pack with `pack_sb3('project_output', 'output.sb3')`.
+
+## Block Reference — Read Before Coding
+
+| Need these blocks? | Read this file |
+|--------------------|----------------|
+| When flag clicked, broadcast, key press | `references/blocks-events.md` |
+| Move, turn, go to, glide | `references/blocks-motion.md` |
+| Say, think, show, hide, costumes | `references/blocks-looks.md` |
+| Wait, repeat, forever, if/else, clones | `references/blocks-control.md` |
+| Ask, touching, mouse, timer | `references/blocks-sensing.md` |
+| Math, random, join, length | `references/blocks-operators.md` |
+| Variables, lists | `references/blocks-variables.md` |
+| Play sound, drums, notes | `references/blocks-sound.md` |
+| Pen down, set color, stamp | `references/blocks-pen.md` |
+| Music instruments, tempo | `references/blocks-music.md` |
+| Overall .sb3 structure | `references/project-json-schema.md` |
+
+## Block Format
+
+```json
+{"opcode":"motion_movesteps","inputs":{"STEPS":[1,[4,"10"]]},"fields":{},"shadow":false,"topLevel":true}
+```
+
+Input: `[1,[4,"10"]]`=number, `[1,[10,"text"]]`=string, `[2,"blockId"]`=nested.
+
+## Coordinate System
+480×360 stage. x:[-240,240], y:[-180,180]. Direction: 0°=up, 90°=right.
+
+## Python Scripts (zero deps)
+- `scratch_utils.py`: pack, unpack, validate, create empty project, add sprites
+- `block_builder.py`: 60+ convenience functions, ScriptBuilder, reporters
+- `project_builder.py`: ScratchProject class (high-level API)
+
+## Important Rules
+- Every sprite ≥ 1 costume, Stage ≥ 1 backdrop
+- Extensions go in `project.json` `extensions` list
+- Validate with `validate_project()` before delivering
+- Python 3.7+, no pip install needed

@@ -1,0 +1,73 @@
+# Windsurf Rules — Scratch Creator
+
+This project is an AI Agent Skill for creating MIT Scratch 3.0 projects (`.sb3` files) programmatically. `.sb3` = ZIP archive with `project.json` + media assets.
+
+## How to Build Scratch Projects
+
+### Step 1: Understand the requirement
+Determine project type (animation/game/story), needed sprites, extensions (pen, music, etc.).
+
+### Step 2: Read reference docs
+- `references/project-json-schema.md` — overall project.json structure
+- `references/blocks-*.md` — 16 category files with all 194+ block opcodes and JSON examples
+
+### Step 3: Build with Python
+```python
+import sys; sys.path.insert(0, 'scripts')
+from project_builder import ScratchProject
+from block_builder import num, string
+
+proj = ScratchProject()
+proj.create_stage()
+sprite = proj.create_sprite("Cat")
+proj.add_blocks_from_chain(sprite, [
+    ("event_whenflagclicked", {}, {}),
+    ("motion_movesteps", {"STEPS": num(10)}, {}),
+])
+proj.save_json("output/project.json")
+```
+
+### Step 4: Pack and validate
+```python
+from scratch_utils import create_project_directory, pack_sb3, validate_project
+# After building, create directory and pack:
+create_project_directory(proj.to_dict(), 'output_dir')
+pack_sb3('output_dir', 'output.sb3')
+```
+
+## Block Reference (Quick Index)
+
+| Category | File | Count |
+|----------|------|-------|
+| Events | `references/blocks-events.md` | 10 |
+| Motion | `references/blocks-motion.md` | 18 |
+| Looks | `references/blocks-looks.md` | 24 |
+| Sound | `references/blocks-sound.md` | 12 |
+| Control | `references/blocks-control.md` | 17 |
+| Sensing | `references/blocks-sensing.md` | 20 |
+| Operators | `references/blocks-operators.md` | 18 |
+| Variables | `references/blocks-variables.md` | 17 |
+| Music/Pen/Video/Translate/TTS | `references/blocks-{category}.md` | — |
+| micro:bit / LEGO | `references/blocks-{category}.md` | — |
+| Custom blocks | `references/blocks-custom.md` | 4 |
+
+## Block JSON Format
+
+```json
+{"opcode":"motion_movesteps","next":null,"parent":null,"inputs":{"STEPS":[1,[4,"10"]]},"fields":{},"shadow":false,"topLevel":true}
+```
+
+Inputs: `[1,[4,"10"]]`=number, `[1,[10,"text"]]`=string, `[1,[12,"id","name"]]`=variable, `[2,"blockId"]`=reporter.
+
+## Coordinate System
+Stage 480×360. x:[-240,240], y:[-180,180], center:(0,0). 0°=up, 90°=right.
+
+## Python API Quick Ref
+- `unpack_sb3(path)` / `pack_sb3(dir, path)` — file I/O
+- `create_empty_project()`, `add_sprite()`, `create_block()` — low-level
+- `ScratchProject` class — high-level builder
+- `make_movesteps(n)`, `make_say(msg)`, `make_forever()`, etc. — block builders
+- `validate_project(data)` → `(bool, issues)` — always validate before shipping
+
+## Templates
+`templates/01-simple-animation/` through `templates/10-multiplayer-chat/` — read the template's README.md to understand the concept, then adapt.
