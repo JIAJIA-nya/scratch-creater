@@ -1,0 +1,132 @@
+{
+  "targets": [
+    {
+      "isStage": true,
+      "name": "Stage",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {},
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "name": "背景1",
+          "bitmapResolution": 1,
+          "dataFormat": "svg",
+          "rotationCenterX": 240,
+          "rotationCenterY": 180
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 0
+    },
+    {
+      "isStage": false,
+      "name": "角色1",
+      "variables": {},
+      "lists": {},
+      "broadcasts": {},
+      "blocks": {
+        "event1": {
+          "opcode": "event_whenflagclicked",
+          "next": "loop1",
+          "parent": null,
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": true,
+          "x": 0,
+          "y": 0
+        },
+        "loop1": {
+          "opcode": "control_forever",
+          "next": null,
+          "parent": "event1",
+          "inputs": {
+            "SUBSTACK": [2, "move1"]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "move1": {
+          "opcode": "motion_movesteps",
+          "next": "bounce1",
+          "parent": null,
+          "inputs": {
+            "STEPS": [1, [4, "10"]]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "bounce1": {
+          "opcode": "motion_ifonedgebounce",
+          "next": "costume1",
+          "parent": "move1",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "costume1": {
+          "opcode": "looks_nextcostume",
+          "next": "wait1",
+          "parent": "bounce1",
+          "inputs": {},
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        },
+        "wait1": {
+          "opcode": "control_wait",
+          "next": null,
+          "parent": "costume1",
+          "inputs": {
+            "DURATION": [1, [5, "0.2"]]
+          },
+          "fields": {},
+          "shadow": false,
+          "topLevel": false
+        }
+      },
+      "comments": {},
+      "currentCostume": 0,
+      "costumes": [
+        {
+          "name": "造型1",
+          "bitmapResolution": 1,
+          "dataFormat": "svg",
+          "rotationCenterX": 48,
+          "rotationCenterY": 50
+        },
+        {
+          "name": "造型2",
+          "bitmapResolution": 1,
+          "dataFormat": "svg",
+          "rotationCenterX": 48,
+          "rotationCenterY": 50
+        }
+      ],
+      "sounds": [],
+      "volume": 100,
+      "layerOrder": 1,
+      "visible": true,
+      "x": 0,
+      "y": 0,
+      "size": 100,
+      "direction": 90,
+      "draggable": false,
+      "rotationStyle": "all around"
+    }
+  ],
+  "monitors": [],
+  "extensions": [],
+  "meta": {
+    "semver": "3.0.0",
+    "vm": "0.2.0",
+    "agent": ""
+  }
+}
