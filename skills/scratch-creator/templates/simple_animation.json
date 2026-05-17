@@ -1,0 +1,34 @@
+{
+  "_comment": "简单动画模板：角色在舞台上移动，碰到边缘反弹",
+  "project_structure": {
+    "targets": [
+      {
+        "isStage": true,
+        "name": "Stage",
+        "costumes": ["空白背景"],
+        "sounds": []
+      },
+      {
+        "isStage": false,
+        "name": "角色1",
+        "costumes": ["造型1", "造型2"],
+        "scripts": [
+          {
+            "trigger": "event_whenflagclicked",
+            "blocks": [
+              "control_forever",
+              "  motion_movesteps(10)",
+              "  control_if(touching_edge)",
+              "    motion_ifonedgebounce",
+              "  looks_nextcostume",
+              "  control_wait(0.2)"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "description": "点击绿旗后角色持续移动，碰到边缘反弹，循环切换造型产生动画效果",
+  "concepts": ["事件触发", "无限循环", "条件判断", "造型切换"],
+  "difficulty": "入门"
+}
