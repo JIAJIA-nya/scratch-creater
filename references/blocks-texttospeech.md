@@ -1,6 +1,6 @@
 # 文字朗读扩展积木块 (Text to Speech Extension)
 
-> 参考文件：`references/blocks-texttospeech.md` | 共 2 个积木块
+> 参考文件：`references/blocks-texttospeech.md` | 共 3 个积木块
 
 文字朗读扩展将文本转换为语音播放，支持多种语言和声音。
 

@@ -1,6 +1,6 @@
 # 控制类积木块 (Control)
 
-> 参考文件：`references/blocks-control.md` | 共 16 个积木块
+> 参考文件：`references/blocks-control.md` | 共 17 个积木块
 
 控制类积木块管理程序的执行流程，包括循环、条件、等待和克隆。
 

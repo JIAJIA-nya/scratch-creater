@@ -297,8 +297,7 @@ def make_nextbackdrop():
 def make_switchbackdropto(backdrop_name):
     """切换背景为 ..."""
     b = BlockBuilder("looks_switchbackdropto")
-    b.set_input("BACKDROP", [1, "backdrop_shadow"])
-    # 需要额外的 shadow 块
+    b.set_input("BACKDROP", [1, backdrop_name])
     return b
 
 
@@ -424,14 +423,14 @@ def make_delete_this_clone():
 def make_play_sound(sound_name):
     """播放声音"""
     b = BlockBuilder("sound_play")
-    b.set_input("SOUND_MENU", [1, "sound_shadow"])
+    b.set_input("SOUND_MENU", [1, sound_name])
     return b
 
 
 def make_playuntildone(sound_name):
     """播放声音直到结束"""
     b = BlockBuilder("sound_playuntildone")
-    b.set_input("SOUND_MENU", [1, "sound_shadow"])
+    b.set_input("SOUND_MENU", [1, sound_name])
     return b
 
 
@@ -461,10 +460,10 @@ def make_setinstrument(inst_num):
     return b
 
 
-def make_playdrum(beats):
+def make_playdrum(drum, beats):
     """击打 ... 拍"""
     b = BlockBuilder("music_playDrumForBeats")
-    b.set_input("DRUM", [1, [4, "1"]])
+    b.set_input("DRUM", [1, [4, str(drum)]])
     b.set_input("BEATS", num(beats))
     return b
 

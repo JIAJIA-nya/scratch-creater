@@ -14,15 +14,15 @@ scratch-creator/
 ├── SKILL.md                        # 本文件：核心工作流
 ├── README.md                       # 项目说明和 Agent 兼容性
 ├── references/                     # 积木块完整参考（按类别分文件）
-│   ├── blocks-events.md            # 事件类（8 个）
+│   ├── blocks-events.md            # 事件类（10 个）
 │   ├── blocks-motion.md            # 运动类（18 个）
-│   ├── blocks-looks.md             # 外观类（22 个）
-│   ├── blocks-sound.md             # 声音类（8 个）
-│   ├── blocks-control.md           # 控制类（11 个）
-│   ├── blocks-sensing.md           # 侦测类（18 个）
-│   ├── blocks-operators.md         # 运算类（17 个）
-│   ├── blocks-variables.md         # 变量和列表（12 个）
-│   ├── blocks-music.md             # 音乐扩展（6 个）
+│   ├── blocks-looks.md             # 外观类（24 个）
+│   ├── blocks-sound.md             # 声音类（12 个）
+│   ├── blocks-control.md           # 控制类（17 个）
+│   ├── blocks-sensing.md           # 侦测类（20 个）
+│   ├── blocks-operators.md         # 运算类（18 个）
+│   ├── blocks-variables.md         # 变量和列表（17 个）
+│   ├── blocks-music.md             # 音乐扩展（7 个）
 │   ├── blocks-pen.md               # 画笔扩展（11 个）
 │   ├── blocks-video.md             # 视频侦测扩展（3 个）
 │   ├── blocks-translate.md         # 翻译扩展（2 个）
@@ -75,15 +75,15 @@ scratch-creator/
 
 | 积木块类别 | 积木数量 | 参考文件 |
 |-----------|---------|---------|
-| 事件 | 8 | `references/blocks-events.md` |
+| 事件 | 10 | `references/blocks-events.md` |
 | 运动 | 18 | `references/blocks-motion.md` |
-| 外观 | 22 | `references/blocks-looks.md` |
-| 声音 | 8 | `references/blocks-sound.md` |
-| 控制 | 11 | `references/blocks-control.md` |
-| 侦测 | 18 | `references/blocks-sensing.md` |
-| 运算 | 17 | `references/blocks-operators.md` |
-| 变量和列表 | 12 | `references/blocks-variables.md` |
-| 音乐扩展 | 6 | `references/blocks-music.md` |
+| 外观 | 24 | `references/blocks-looks.md` |
+| 声音 | 12 | `references/blocks-sound.md` |
+| 控制 | 17 | `references/blocks-control.md` |
+| 侦测 | 20 | `references/blocks-sensing.md` |
+| 运算 | 18 | `references/blocks-operators.md` |
+| 变量和列表 | 17 | `references/blocks-variables.md` |
+| 音乐扩展 | 7 | `references/blocks-music.md` |
 | 画笔扩展 | 11 | `references/blocks-pen.md` |
 | 视频侦测扩展 | 3 | `references/blocks-video.md` |
 | 翻译扩展 | 2 | `references/blocks-translate.md` |
@@ -91,7 +91,7 @@ scratch-creator/
 | micro:bit 扩展 | 16 | `references/blocks-microbit.md` |
 | LEGO 扩展 | 12+ | `references/blocks-lego.md` |
 | 自定义积木 | 4 | `references/blocks-custom.md` |
-| **合计** | **170+** | |
+| **合计** | **194+** | |
 
 ### 3. 修改现有项目
 

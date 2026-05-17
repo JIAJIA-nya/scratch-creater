@@ -1,6 +1,6 @@
 # 外观类积木块 (Looks)
 
-> 参考文件：`references/blocks-looks.md` | 共 22 个积木块
+> 参考文件：`references/blocks-looks.md` | 共 24 个积木块
 
 外观类积木块控制角色的显示效果，包括对话气泡、造型切换、大小、颜色特效等。
 
@@ -181,4 +181,64 @@
 ```json
 {
   "block": {
-    "opcode": "looks_switchbackdroptoan
+    "opcode": "looks_switchbackdroptoandwait",
+    "next": null,
+    "parent": "prev",
+    "inputs": {
+      "BACKDROP": [1, "backdrop_block_id"]
+    },
+    "fields": {},
+    "shadow": false,
+    "topLevel": false
+  }
+}
+```
+
+### 隐藏所有角色
+```json
+{
+  "block": {
+    "opcode": "looks_hideallsprites",
+    "next": null,
+    "parent": "prev",
+    "inputs": {},
+    "fields": {},
+    "shadow": false,
+    "topLevel": false
+  }
+}
+```
+
+### 伸缩增加 N
+```json
+{
+  "block": {
+    "opcode": "looks_changestretchby",
+    "next": null,
+    "parent": "prev",
+    "inputs": {
+      "CHANGE": [1, [4, "10"]]
+    },
+    "fields": {},
+    "shadow": false,
+    "topLevel": false
+  }
+}
+```
+
+### 伸缩设为 N%
+```json
+{
+  "block": {
+    "opcode": "looks_setstretchto",
+    "next": null,
+    "parent": "prev",
+    "inputs": {
+      "STRETCH": [1, [4, "100"]]
+    },
+    "fields": {},
+    "shadow": false,
+    "topLevel": false
+  }
+}
+```

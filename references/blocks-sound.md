@@ -1,6 +1,6 @@
 # 声音类积木块 (Sound)
 
-> 参考文件：`references/blocks-sound.md` | 共 8 个积木块
+> 参考文件：`references/blocks-sound.md` | 共 12 个积木块
 
 声音类积木块控制音效和背景音乐的播放。
 
@@ -125,4 +125,23 @@
       "VOLUME": [1, [4, "-10"]]
     },
     "fields": {},
-    "shadow": fa
+    "shadow": false,
+    "topLevel": false
+  }
+}
+```
+
+### 读取音量（reporter）
+```json
+{
+  "block": {
+    "opcode": "sound_volume",
+    "next": null,
+    "parent": null,
+    "inputs": {},
+    "fields": {},
+    "shadow": false,
+    "topLevel": false
+  }
+}
+```

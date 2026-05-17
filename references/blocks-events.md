@@ -1,6 +1,6 @@
 # 事件类积木块 (Events)
 
-> 参考文件：`references/blocks-events.md` | 共 8 个积木块
+> 参考文件：`references/blocks-events.md` | 共 10 个积木块
 
 事件类积木块是脚本的触发器，位于每个脚本的最顶端（topLevel: true）。
 

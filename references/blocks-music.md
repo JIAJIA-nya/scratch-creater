@@ -1,6 +1,6 @@
 # 音乐扩展积木块 (Music Extension)
 
-> 参考文件：`references/blocks-music.md` | 共 6 个积木块
+> 参考文件：`references/blocks-music.md` | 共 7 个积木块
 
 音乐扩展允许项目演奏音符、设置乐器、控制节拍和速度。
 

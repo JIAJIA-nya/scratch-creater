@@ -1,6 +1,6 @@
 # 变量和列表积木块 (Variables)
 
-> 参考文件：`references/blocks-variables.md` | 共 12 个积木块
+> 参考文件：`references/blocks-variables.md` | 共 17 个积木块
 
 变量和列表积木块用于存储和操作数据。变量存储单个值，列表存储多个值。
 

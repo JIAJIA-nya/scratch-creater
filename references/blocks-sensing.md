@@ -1,6 +1,6 @@
 # 侦测类积木块 (Sensing)
 
-> 参考文件：`references/blocks-sensing.md` | 共 18 个积木块
+> 参考文件：`references/blocks-sensing.md` | 共 20 个积木块
 
 侦测类积木块用于检测碰撞、距离、用户输入、时间等信息。
 

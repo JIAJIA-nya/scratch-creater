@@ -1,6 +1,6 @@
 # 运算类积木块 (Operators)
 
-> 参考文件：`references/blocks-operators.md` | 共 17 个积木块
+> 参考文件：`references/blocks-operators.md` | 共 18 个积木块
 
 运算类积木块提供数学运算、逻辑运算和字符串操作功能。所有运算积木块都是 reporter（返回值），需要嵌入到其他积木块的 inputs 中使用。
 
@@ -395,4 +395,28 @@
 ```json
 {
   "add_block": {
-    "opcode": "ope
+    "opcode": "operator_add",
+    "next": null,
+    "parent": null,
+    "inputs": {
+      "NUM1": [1, [4, "3"]],
+      "NUM2": [1, [4, "5"]]
+    },
+    "fields": {},
+    "shadow": false,
+    "topLevel": false
+  },
+  "mul_block": {
+    "opcode": "operator_multiply",
+    "next": null,
+    "parent": null,
+    "inputs": {
+      "NUM1": [2, "add_block"],
+      "NUM2": [1, [4, "2"]]
+    },
+    "fields": {},
+    "shadow": false,
+    "topLevel": false
+  }
+}
+```
