@@ -86,7 +86,11 @@ def create_empty_project():
                 "costumes": [],
                 "sounds": [],
                 "volume": 100,
-                "layerOrder": 0
+                "layerOrder": 0,
+                "tempo": 60,
+                "videoTransparency": 50,
+                "videoState": "on",
+                "textToSpeechLanguage": None
             }
         ],
         "monitors": [],
@@ -301,9 +305,12 @@ def create_project_directory(project_data, output_dir, media_files=None):
     if media_files:
         for filename, content in media_files.items():
             filepath = os.path.join(output_dir, filename)
-            mode = 'w' if isinstance(content, str) else 'b'
-            with open(filepath, mode, encoding='utf-8' if mode == 'w' else None) as f:
-                f.write(content)
+            if isinstance(content, str):
+                with open(filepath, 'w', encoding='utf-8') as f:
+                    f.write(content)
+            else:
+                with open(filepath, 'wb') as f:
+                    f.write(content)
 
     return output_dir
 
@@ -340,6 +347,14 @@ def field_value(value):
     return [value, None]
 
 
+def color_val(hex_color):
+    """颜色值"""
+    return [1, hex_color]
+
+
+null = None
+
+
 # ===== 示例和测试 =====
 
 def create_demo_project():
@@ -363,10 +378,14 @@ def create_demo_project():
   <circle cx="61" cy="35" r="5" fill="#000"/>
 </svg>'''
 
+    cat_md5 = hashlib.md5(cat_svg.encode('utf-8')).hexdigest()
+
     costumes = [{
         "name": "cat",
         "bitmapResolution": 1,
         "dataFormat": "svg",
+        "assetId": cat_md5,
+        "md5ext": f"{cat_md5}.svg",
         "rotationCenterX": 48,
         "rotationCenterY": 50
     }]
@@ -397,7 +416,9 @@ def create_demo_project():
         "inputs": {"MESSAGE": str_input("你好！")},
         "fields": {},
         "shadow": False,
-        "topLevel": False
+        "topLevel": False,
+        "x": 0,
+        "y": 100
     }
 
     sprite["blocks"][b3_id] = {
@@ -407,7 +428,9 @@ def create_demo_project():
         "inputs": {"STEPS": num(10)},
         "fields": {},
         "shadow": False,
-        "topLevel": False
+        "topLevel": False,
+        "x": 0,
+        "y": 200
     }
 
     # 验证
@@ -415,18 +438,25 @@ def create_demo_project():
     if not is_valid:
         print(f"警告: 项目验证问题: {issues}")
 
-    return project
+    # 收集素材文件
+    backdrop = stage["costumes"][0]
+    media_files = {
+        backdrop["md5ext"]: blue_bg,
+        costumes[0]["md5ext"]: cat_svg
+    }
+
+    return project, media_files
 
 
 if __name__ == "__main__":
     # 创建演示项目并打包
-    project = create_demo_project()
+    project, media_files = create_demo_project()
 
     # 创建临时目录
     demo_dir = os.path.join(os.path.dirname(__file__), '..', 'demo_project')
     demo_dir = os.path.normpath(demo_dir)
 
-    create_project_directory(project, demo_dir)
+    create_project_directory(project, demo_dir, media_files=media_files)
     print(f"项目已创建: {demo_dir}")
 
     # 打包为 .sb3

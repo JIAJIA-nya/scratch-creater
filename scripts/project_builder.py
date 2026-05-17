@@ -114,6 +114,7 @@ class ScratchProject:
         sound = {
             "name": name,
             "dataFormat": data_format,
+            "format": "",
             "rate": rate,
             "sampleCount": sample_count
         }
@@ -202,8 +203,8 @@ class ScratchProject:
         issues = []
         if not self._stage:
             issues.append("缺少 Stage")
-        if len(self.targets) < 2:
-            issues.append("项目中没有角色（Sprite）")
+        if len(self.targets) == 0:
+            issues.append("项目中没有目标（targets）")
 
         for target in self.targets:
             name = target.get("name", "unknown")

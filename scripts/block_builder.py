@@ -142,7 +142,7 @@ def string(value):
     return [1, [10, str(value)]]
 
 
-def variable_ref(var_id, var_name):
+def variable_ref(var_name, var_id):
     """变量引用"""
     return [1, [12, var_id, var_name]]
 
@@ -157,7 +157,7 @@ def block_ref_default(block_id, default):
     return [3, block_id, [10, str(default)]]
 
 
-def field_val(value):
+def field_value(value):
     """字段值"""
     return [value, None]
 
